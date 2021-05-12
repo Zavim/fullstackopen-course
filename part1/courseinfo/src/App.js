@@ -1,15 +1,26 @@
-import React from 'react';
+import React from "react";
 
 const App = () => {
 	const course = {
-		name: 'Half Stack application development',
+		name: "Half Stack application development",
 		parts: [
-			{ name: 'Fundamentals of React ', exercises: 10 },
-			{ name: 'Using props to pass data ', exercises: 7 },
-			{ name: 'State of a component ', exercises: 14 },
+			{ name: "Fundamentals of React ", exercises: 10, id: 1 },
+			{ name: "Using props to pass data ", exercises: 7, id: 2 },
+			{ name: "State of a component ", exercises: 14, id: 3 },
+			{ name: "Redux ", exercises: 11, id: 4 },
 		],
 	};
-	const [part1, part2, part3] = course.parts;
+	const [part1, part2, part3, part4] = course.parts;
+
+	const Course = ({ course }) => {
+		return (
+			<>
+				<Header course={course} />
+				<Content part1={part1} part2={part2} part3={part3} part4={part4} />
+				<Total parts={course.parts} />
+			</>
+		);
+	};
 
 	const Header = ({ course }) => {
 		return <h1>{course.name}</h1>;
@@ -36,20 +47,20 @@ const App = () => {
 		);
 	};
 
-	const Total = ({ part1, part2, part3 }) => {
+	const Total = ({ parts }) => {
+		const total = parts.reduce((sum, part) => {
+			return sum + part.exercises;
+		}, 0);
 		return (
 			<p>
-				Number of exercises{' '}
-				{part1.exercises + part2.exercises + part3.exercises}
+				<strong> total of {total} exercises</strong>
 			</p>
 		);
 	};
 
 	return (
 		<>
-			<Header course={course} />
-			<Content part1={part1} part2={part2} part3={part3} />
-			<Total part1={part1} part2={part2} part3={part3} />
+			<Course course={course} />
 		</>
 	);
 };
