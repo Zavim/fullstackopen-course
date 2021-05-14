@@ -3,7 +3,7 @@ import Note from './components/Note';
 
 const App = (props) => {
   const [notes, setNotes] = useState(props.notes);
-  const [newNote, setNewNote] = useState('new note...');
+  const [newNote, setNewNote] = useState('');
   const [showAll, setShowAll] = useState(true);
 
   const addNote = (event) => {
@@ -23,13 +23,16 @@ const App = (props) => {
     setNewNote(event.target.value);
   };
 
-  const notesToShow = showAll
-    ? notes
-    : notes.filter((note) => note.important === true);
+  const notesToShow = showAll ? notes : notes.filter((note) => note.important); //check if note.important is true
 
   return (
-    <div>
+    <>
       <h1>Notes</h1>
+      <div>
+        <button onClick={() => setShowAll(!showAll)}>
+          show {showAll ? 'important' : 'all'}
+        </button>
+      </div>
       <ul>
         {notesToShow.map((note) => (
           <Note key={note.id} note={note} />
@@ -39,7 +42,7 @@ const App = (props) => {
         <input value={newNote} onChange={handleNoteChange} />
         <button type='submit'>save</button>
       </form>
-    </div>
+    </>
   );
 };
 
